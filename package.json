@@ -5,11 +5,11 @@
   "main": "./src/index.js",
   "scripts": {
     "start": "npm run dev",
-    "dev": "cross-env NODE_ENV=development webpack serve --config ./webpack.config.js",
-    "build": "cross-env NODE_ENV=production webpack --config ./webpack.config.js"
+    "dev": "cross-env NODE_ENV=development webpack serve",
+    "build": "cross-env NODE_ENV=production webpack"
   },
   "keywords": [],
-  "author": "",
+  "author": "dzb",
   "license": "ISC",
   "browserslist": [
     "last 2 version",
@@ -46,6 +46,7 @@
   },
   "dependencies": {
     "antd": "^5.5.0",
+    "axios": "^1.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.1"

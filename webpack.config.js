@@ -64,16 +64,16 @@ module.exports = {
                 test: /\.less$/,
                 use: getStyleLoaders('less-loader')
             },
-            // //处理 sass-loader
-            // {
-            //     test: /\.s[ac]ss$/,
-            //     use: getStyleLoaders('sass-loader')
-            // },
-            // //处理 stylus-loader
-            // {
-            //     test: /\.styl$/,
-            //     use: getStyleLoaders('stylus-loader')
-            // },
+            //处理 sass-loader
+            {
+                test: /\.s[ac]ss$/,
+                use: getStyleLoaders('sass-loader')
+            },
+            //处理 stylus-loader
+            {
+                test: /\.styl$/,
+                use: getStyleLoaders('stylus-loader')
+            },
             //处理图片
             {
                 test: /\.(png|jpe?g|gif|webp|svg)/,
