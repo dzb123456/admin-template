@@ -140,7 +140,10 @@ module.exports = {
     //解析选项
     resolve: {
         //自动补全文件扩展名
-        extensions: ['.jsx', '.js', '.json']
+        extensions: ['.jsx', '.js', '.json'],
+        alias: {
+            "@": path.resolve(__dirname, "./src"),
+        }
     },
     //模式
     mode: isProduction ? 'production' : 'development',
@@ -191,7 +194,16 @@ module.exports = {
         port: '3000',
         open: true,
         hot: true,
-        historyApiFallback: true    //解决前端路由刷新404问题
+        historyApiFallback: true,    //解决前端路由刷新404问题
+        proxy: {
+            "/api": {
+                target: "http://localhost:8000",
+                changeOrigin: true,
+                pathRewrite: {
+                    '/api': ''
+                }
+            }
+        }
     },
     performance: false   //关闭性能分析
 }

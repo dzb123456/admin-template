@@ -25,7 +25,7 @@ const Element = function Element(props){
 
 export default function RouterView(){
     return (
-        <Suspense fallback={<Spin tip="Loading..."/>}>
+        <Suspense fallback={<Spin/>}>
             <Routes>
                 { routes.map((item, index) =>{
                     let { name, path } = item;

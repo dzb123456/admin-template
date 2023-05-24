@@ -1,9 +1,15 @@
 import React from 'react';
 import { Button, Form, Input } from 'antd';
+import { login } from '@/api/user';
 import './index.scss';
 
-const fnSubmit = (values) => {
-    console.log('Success:', values);
+/**
+ * 登录调用登录接口，并存储token
+ * @param values
+ */
+const fnSubmit = async (values) => {
+    const res = await login(values);
+    console.log('提交', res);
 };
 
 const Login = function Login(){
