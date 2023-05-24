@@ -1,18 +1,35 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input } from 'antd';
+import { useDispatch } from 'react-redux';
 import { login } from '@/api/user';
+import { user } from '@/store/modules/user';
 import './index.scss';
 
-/**
- * 登录调用登录接口，并存储token
- * @param values
- */
-const fnSubmit = async (values) => {
-    const res = await login(values);
-    console.log('提交', res);
-};
-
 const Login = function Login(){
+
+    //定义dispatch派发器
+    let  dispatch = useDispatch();
+
+    //定义导航
+    let navigate = useNavigate();
+
+    const { setToken } = user.actions;
+
+    /**
+     * 登录调用登录接口，并存储token
+     * @param values
+     */
+    const fnSubmit = async (values) => {
+        const res = await login(values);
+
+        //将token存储更新
+        dispatch(setToken(res));
+
+        //重定向到首页
+        navigate('/');
+    };
+
     return (
         <div className="login-container f-c-c">
             <Form name="basic" className="login-form-container" onFinish={fnSubmit}>

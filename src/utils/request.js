@@ -1,18 +1,17 @@
 import axios from 'axios';
 import  { baseInfo, isProduction } from '../config/index';
-import { cryptoEncrypt, cryptoDecrypt } from './crypto';
+import { cryptoEncrypt } from './crypto';
 
-const http = axios.create({
+const request = axios.create({
     baseURL: baseInfo.baseURL,
     timeout: 20000,
 });
 
 // 添加请求拦截器
-axios.interceptors.request.use(function (config) {
+request.interceptors.request.use(function (config) {
 
     const { data, withoutToken, isCryptoEncrypt = isProduction } = config;
 
-    console.log('请求拦截器', config);
     const token = sessionStorage.getItem('user-token');
     if(!withoutToken && token){
 
@@ -22,23 +21,19 @@ axios.interceptors.request.use(function (config) {
 
     //生产环境对数据参数加密、对登录信息进行加密
     if(isCryptoEncrypt && data){
-        config.data = { encryptedData: cryptoEncrypt(data) };
+        config.data = { encryptedData: cryptoEncrypt(JSON.stringify(data)) };
     }
 
     return config;
 }, function (error) {
-
-    console.log('请求拦截器', error);
     return Promise.reject(error);
 });
 
 // 添加响应拦截器
-axios.interceptors.response.use(function (response) {
-
-    console.log('像哟ing拦截器', response);
+request.interceptors.response.use(function (response) {
     if (response.data) {
-        const { encryptedData } = response.data;
-        const result = cryptoDecrypt(encryptedData);
+        const result = response.data;
+
         //判断状态码,重定向页面
         if(result.status === 401){
 
@@ -54,4 +49,4 @@ axios.interceptors.response.use(function (response) {
     return Promise.reject(error);
 });
 
-export default http;
+export default request;

@@ -1,9 +1,9 @@
 import CryptoJS from "crypto-js";
 
 // 密钥
-const SECRET_KEY = CryptoJS.enc.Utf8.parse("dzb");
+const SECRET_KEY = CryptoJS.enc.Utf8.parse("1234123412341234");
 // 密钥偏移量
-const SECRET_IV = CryptoJS.enc.Utf8.parse("dzb");
+const SECRET_IV = CryptoJS.enc.Utf8.parse("1234123412341234");
 
 const CRYPTO_CONFIG = {
     iv: SECRET_IV,
@@ -17,9 +17,9 @@ const CRYPTO_CONFIG = {
  * @returns {string}
  */
 export function cryptoEncrypt(data) {
-    const dataHex = CryptoJS.enc.Utf8.parse(JSON.stringify(data));
-    const encrypted = CryptoJS.AES.encrypt(dataHex, SECRET_KEY, CRYPTO_CONFIG);
-    return encrypted.ciphertext.toString();
+    const valueSrc = CryptoJS.enc.Utf8.parse(data);
+    const encrypted = CryptoJS.AES.encrypt(valueSrc, SECRET_KEY, CRYPTO_CONFIG);
+    return encrypted.ciphertext.toString(CryptoJS.enc.Base64);
 }
 
 /**
@@ -28,8 +28,8 @@ export function cryptoEncrypt(data) {
  * @returns {string}
  */
 export function cryptoDecrypt(data) {
-    const encryptedHexStr = CryptoJS.enc.Hex.parse(data);
-    const str = CryptoJS.enc.Base64.stringify(encryptedHexStr);
-    const decrypt = CryptoJS.AES.decrypt(str, SECRET_KEY, CRYPTO_CONFIG);
+    const encryptedHexStr = CryptoJS.enc.Base64.parse(data);
+    const valueSrc = CryptoJS.enc.Base64.stringify(encryptedHexStr);
+    const decrypt = CryptoJS.AES.decrypt(valueSrc, SECRET_KEY, CRYPTO_CONFIG);
     return decrypt.toString(CryptoJS.enc.Utf8).toString();
 }
