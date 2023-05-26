@@ -23,20 +23,27 @@ const Element = function Element(props){
            usp={usp}/>
 };
 
-export default function RouterView(){
+const createRoute =  function createRoute(routes){
     return (
-        <Suspense fallback={<Spin/>}>
-            <Routes>
-                { routes.map((item, index) =>{
-                    let { name, path } = item;
-                    return <Route
-                           key= {name}
-                           path= {path}
-                           element= {<Element {...item}/>}/>
-                  })
-                }
-            </Routes>
-        </Suspense>
+        <>
+            { routes.map((item, index) =>{
+                let { name, path, children } = item;
+                return <Route key= {name} path= {path} element= {<Element {...item}/>}>
+                    {Array.isArray(children) ? createRoute(children) : null}
+                </Route>
+            })
+            }
+        </>
     )
 };
 
+/*路由容器*/
+export default function RouterView() {
+    return (
+        <Suspense fallback={<Spin/>}>
+            <Routes>
+                {createRoute(routes)}
+            </Routes>
+         </Suspense>
+    )
+}

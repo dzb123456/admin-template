@@ -7,7 +7,7 @@ export const user =  createSlice({
     },
     reducers: {
         setToken(state, { payload }){
-            sessionStorage.setItem('user-token', payload);
+            sessionStorage.setItem('user-token', payload.token);
         }
     }
 })

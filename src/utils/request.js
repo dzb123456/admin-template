@@ -13,7 +13,8 @@ request.interceptors.request.use(function (config) {
     const { data, withoutToken, isCryptoEncrypt = isProduction } = config;
 
     const token = sessionStorage.getItem('user-token');
-    if(!withoutToken && token){
+
+    if(withoutToken && token){
 
         //给header添加token
         config.headers["Authorization"] = token;
